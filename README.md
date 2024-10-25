@@ -67,7 +67,6 @@ Ikomia Studio offers a friendly UI with the same features as the API.
     - yolo11s
     - yolo11l
     - yolo11x
-
 - **input_size** (int) - default '640': Size of the input image.
 - **conf_thres** (float) default '0.25': Box threshold for the prediction [0,1].
 - **iou_thres** (float) - default '0.7': Intersection over Union, degree of overlap between two boxes [0,1].
@@ -87,7 +86,7 @@ wf = Workflow()
 algo = wf.add_task(name="infer_yolo_v11", auto_connect=True)
 
 algo.set_parameters({
-    "model_name": "yolov11m",
+    "model_name": "yolo11m",
     "conf_thres": "0.25",
     "input_size": "640",
     "iou_thres": "0.7",
@@ -116,7 +115,6 @@ algo = wf.add_task(name="infer_yolo_v11", auto_connect=True)
 
 # Run on your image  
 wf.run_on(url='https://github.com/Ikomia-dev/notebooks/blob/main/examples/img/img_people_workspace.jpg?raw=true')
-
 
 # Iterate over outputs
 for output in algo.get_outputs():
