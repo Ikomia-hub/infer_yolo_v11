@@ -21,7 +21,7 @@
 
 Run YOLOv11 object detection models.
 
-![Desk object detection](https://raw.githubusercontent.com/Ikomia-hub/infer_yolo_v11/feat/new_readme/icons/output.jpg)
+![Desk object detection](https://raw.githubusercontent.com/Ikomia-hub/infer_yolo_v11/feat/new_readme/images/output.jpg)
 
 ## :rocket: Use with Ikomia API
 
