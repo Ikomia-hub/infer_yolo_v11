@@ -98,7 +98,7 @@ class InferYoloV11(dataprocess.CObjectDetectionTask):
 
         param.update = False
 
-    def init_long_process(self, CObjectDetectionTask, *args, **kwargs):
+    def init_long_process(self):
         self._load_model()
         super().init_long_process()
 
