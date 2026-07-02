@@ -51,6 +51,8 @@ class InferYoloV11Param(core.CWorkflowTaskParam):
 # - Class which implements the algorithm
 # - Inherits PyCore.CWorkflowTask or derived from Ikomia API
 # --------------------
+
+
 class InferYoloV11(dataprocess.CObjectDetectionTask):
 
     def __init__(self, name, param):
@@ -80,15 +82,18 @@ class InferYoloV11(dataprocess.CObjectDetectionTask):
 
     def _load_model(self):
         param = self.get_param_object()
-        self.device = torch.device("cuda") if param.cuda and torch.cuda.is_available() else torch.device("cpu")
+        self.device = torch.device(
+            "cuda") if param.cuda and torch.cuda.is_available() else torch.device("cpu")
         self.half = True if param.cuda and torch.cuda.is_available() else False
 
         if param.model_weight_file:
             self.model = YOLO(param.model_weight_file)
         else:
             # Set path
-            model_folder = os.path.join(os.path.dirname(os.path.realpath(__file__)), "weights")
-            model_weights = os.path.join(str(model_folder), f'{param.model_name}.pt')
+            model_folder = os.path.join(os.path.dirname(
+                os.path.realpath(__file__)), "weights")
+            model_weights = os.path.join(
+                str(model_folder), f'{param.model_name}.pt')
 
             # Download model if not exist
             if not os.path.isfile(model_weights):
@@ -186,7 +191,7 @@ class InferYoloV11Factory(dataprocess.CTaskFactory):
         self.info.short_description = "Inference with YOLOv11 models"
         # relative path -> as displayed in Ikomia application process tree
         self.info.path = "Plugins/Python/Detection"
-        self.info.version = "1.2.0"
+        self.info.version = "1.2.1"
         self.min_ikomia_version = "0.16.0"
         self.info.icon_path = "images/icon.png"
         self.info.authors = "Jocher, G., Chaurasia, A., & Qiu, J"
