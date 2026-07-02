@@ -1,5 +1,6 @@
 import copy
 import os
+import numpy as np
 import torch
 from ikomia import core, dataprocess, utils
 from ultralytics import YOLO
@@ -102,6 +103,15 @@ class InferYoloV11(dataprocess.CObjectDetectionTask):
         self._load_model()
         super().init_long_process()
 
+    def _prepare_image(self, image):
+        image = np.asarray(image)
+        if image.ndim == 2:
+            image = np.repeat(image[:, :, None], 3, axis=2)
+        elif image.ndim == 3 and image.shape[2] == 4:
+            image = image[:, :, :3]
+
+        return np.ascontiguousarray(image)
+
     def run(self):
         # Core function of your process
         # Call begin_task_run() for initialization
@@ -115,6 +125,7 @@ class InferYoloV11(dataprocess.CObjectDetectionTask):
 
         # Get image from input/output (numpy array):
         src_image = img_input.get_image()
+        image = self._prepare_image(src_image)
 
         # Load model
         if param.update:
@@ -122,7 +133,7 @@ class InferYoloV11(dataprocess.CObjectDetectionTask):
 
         # Run detection
         results = self.model.predict(
-            src_image,
+            image,
             save=False,
             imgsz=param.input_size,
             conf=param.conf_thres,
